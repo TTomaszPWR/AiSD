@@ -41,9 +41,4 @@ public class KthElementIterator<T> implements Iterator<T> {
 
         return result;
     }
-
-    @Override
-    public void remove() {
-        baseIterator.remove();
-    }
 }

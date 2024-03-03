@@ -1,9 +1,11 @@
 package lab_list1;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class CardGame {
-    private final ArrayList<Card> cards = new ArrayList<Card>();
+    private final ArrayList<Card> cards = new ArrayList<>();
 
     public void createArrayList() {
         cards.clear();
@@ -72,25 +74,29 @@ public class CardGame {
     public void displayCardsByValue(Scanner scanner) {
         System.out.print("Podaj wartość karty (1-13): ");
         int value = scanner.nextInt();
+
+        FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getValue() == value);
+
         System.out.println("Karty o wartości " + value + ":");
-        for (Card card : cards) {
-            if (card.getValue() == value) {
-                System.out.println(card);
-            }
+        while (filterIterator.hasNext()) {
+            System.out.println(filterIterator.next());
         }
     }
 
     public void displayCardsByColor(Scanner scanner) {
         System.out.print("Podaj kolor karty (0-3): ");
         int color = scanner.nextInt();
+
+        FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getColor() == color);
+
         System.out.println("Karty o kolorze " + color + ":");
-        for (Card card : cards) {
-            if (card.getColor() == color) System.out.println(card);
+        while (filterIterator.hasNext()) {
+            System.out.println(filterIterator.next());
         }
     }
 
     public void removeDuplicateCards() {
-        ArrayList<Card> temp = new ArrayList<Card>();
+        ArrayList<Card> temp = new ArrayList<>();
         boolean isDuplicate = false;
         for (Card card: cards) {
             for(Card card2: temp){

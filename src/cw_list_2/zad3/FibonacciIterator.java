@@ -24,9 +24,4 @@ public class FibonacciIterator implements Iterator<Integer> {
         current = temp;
         return result;
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Operation not supported");
-    }
 }

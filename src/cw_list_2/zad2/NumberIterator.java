@@ -19,9 +19,4 @@ public class NumberIterator implements Iterator<Integer> {
         currentNumber++;
         return nextNumber;
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Operation not supported");
-    }
 }
