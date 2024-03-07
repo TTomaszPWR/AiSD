@@ -21,6 +21,6 @@ public class ShuffleIterator<T> implements Iterator<T> {
     @Override
     public T next() {
         turn = !turn;
-        return turn ? (iter1.hasNext() ? iter1.next() : iter2.next()) : (iter2.hasNext() ? iter2.next() : iter1.next());
+        return turn ? (iter1.hasNext() ? iter1.next() : iter2.next()): (iter2.hasNext() ? iter2.next() : iter1.next());
     }
 }

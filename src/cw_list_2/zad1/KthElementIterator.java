@@ -27,7 +27,6 @@ public class KthElementIterator<T> implements Iterator<T> {
 
         T result = null;
         while (baseIterator.hasNext()) {
-            result = baseIterator.next();
             count++;
             if (count == k) {
                 count = 0;

@@ -3,6 +3,8 @@ package cw_list_2.zad5;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static java.lang.Math.sqrt;
+
 public class PrimeNumberIterator implements Iterator<Integer> {
     private final ArrayList<Integer> listOfDividers;
     int number;
@@ -19,9 +21,12 @@ public class PrimeNumberIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
+        if(number==2) {
+            return number++;
+        }
         while (true) {
             boolean isPrime = true;
-            for (int i = 0; i < listOfDividers.size(); i++) {
+            for (int i=0; i<listOfDividers.size(); i++) {
                 if (number % listOfDividers.get(i) == 0) {
                     isPrime = false;
                     break;
@@ -31,7 +36,7 @@ public class PrimeNumberIterator implements Iterator<Integer> {
                 listOfDividers.add(number);
                 return number;
             }
-            number++;
+            number+=2;
         }
     }
 }

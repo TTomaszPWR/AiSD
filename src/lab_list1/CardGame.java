@@ -13,11 +13,11 @@ public class CardGame {
         System.out.println("Tworzenie Arraylist...");
         while (true) {
             int value = random.nextInt(14);
-            int suit = random.nextInt(4);
+            int color = random.nextInt(4);
 
             if (value == 0) break;
 
-            Card newCard = new Card(value, suit);
+            Card newCard = new Card(value, color);
 
             if(cards.isEmpty()) {
                 cards.add(newCard);
@@ -50,6 +50,7 @@ public class CardGame {
                 }
             }
         }
+        //dodawanie asów na początku
         for(int i=0; i<3; i++){
             cards.addFirst(new Card(1,0));
         }
@@ -72,27 +73,39 @@ public class CardGame {
     }
 
     public void displayCardsByValue(Scanner scanner) {
+
         System.out.print("Podaj wartość karty (1-13): ");
         int value = scanner.nextInt();
+        if(value>=1 && value<=13) {
+            boolean isSearched=false;
 
-        FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getValue() == value);
+            FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getValue() == value);
 
-        System.out.println("Karty o wartości " + value + ":");
-        while (filterIterator.hasNext()) {
-            System.out.println(filterIterator.next());
-        }
+            System.out.println("Karty o wartości " + value + ":");
+            while (filterIterator.hasNext()) {
+                System.out.println(filterIterator.next());
+                isSearched = true;
+            }
+            if(!isSearched) System.out.println("Nie znaleziono kart o podanej wartości");
+        }else System.out.println("Wprowadzono niepoprawną wartość. Powrócono do menu");
     }
 
     public void displayCardsByColor(Scanner scanner) {
         System.out.print("Podaj kolor karty (0-3): ");
         int color = scanner.nextInt();
 
-        FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getColor() == color);
+        if(color>=0 && color<=3) {
+            boolean isSearched = false;
 
-        System.out.println("Karty o kolorze " + color + ":");
-        while (filterIterator.hasNext()) {
-            System.out.println(filterIterator.next());
-        }
+            FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getColor() == color);
+
+            System.out.println("Karty o kolorze " + color + ":");
+            while (filterIterator.hasNext()) {
+                System.out.println(filterIterator.next());
+                isSearched = true;
+            }
+            if(!isSearched) System.out.println("Nie znaleziono kart o podanym kolorze");
+        }else System.out.println("Wprowadzono niepoprawną wartość. Powrócono do menu");
     }
 
     public void removeDuplicateCards() {
@@ -112,4 +125,5 @@ public class CardGame {
         cards.addAll(temp);
     }
 }
+
 
