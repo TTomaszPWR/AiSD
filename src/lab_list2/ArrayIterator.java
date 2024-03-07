@@ -1,6 +1,8 @@
 package lab_list2;
 
-public class ArrayIterator {
+import java.util.Iterator;
+
+public class ArrayIterator implements Iterator<Worker> {
     private Worker[] workers;
     private int index;
 
@@ -9,10 +11,12 @@ public class ArrayIterator {
         this.index = 0;
     }
 
+    @Override
     public boolean hasNext() {
         return index < workers.length;
     }
 
+    @Override
     public Worker next() {
         return workers[index++];
     }

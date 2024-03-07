@@ -1,6 +1,8 @@
 package lab_list2;
 
-public abstract class Worker {
+import java.io.Serializable;
+
+public abstract class Worker implements Serializable {
     private String name, surname, position;
     private long pesel;
     private int internship;
