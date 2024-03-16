@@ -12,50 +12,9 @@ public class CardGame {
     private final OneWayLinkedListWithHead<Card> cards = new OneWayLinkedListWithHead<>();
     private final boolean[] isInList = new boolean[52];
 
-
-
-
-   /* public void createArrayList() {
-        Random generator = new Random();
-        int value = 14, color, n=0;
-        Arrays.fill(isInList, false);
-        cards.clear();
-
-        while (value!=0)
-        {
-            value = generator.nextInt(15);
-            color = generator.nextInt(4);
-
-            if (value!=0)
-            {
-                if (value==14)
-                {
-                    cards.add(new Card(value, color, false));
-                    n++;
-                }
-                else
-                {
-                    if (!isInList[(value - 1) + 13 * color])
-                    {
-                        if (n==0)
-                        {
-                            cards.add(new Card(value, color, true));
-                        }
-                        else
-                        {
-                            cards.add(znajdzIndeks(value, color), new Card(value, color, true));
-                        }
-                        isInList[(value-1)+13*color]=true;
-                        n++;
-                    }
-                }
-            }
-        }
-
-    }*/
-
     public void createArrayList() {
         cards.clear();
+        Arrays.fill(isInList, false);
         Random random = new Random();
         System.out.println("Tworzenie Arraylist...");
         while (true) {
@@ -66,33 +25,36 @@ public class CardGame {
             else if (value == 14) {
                 cards.add(new Card(value, color, false));
             } else {
-                Card newCard = new Card(value, color, true);
+                if (!isInList[(value - 1) * 4 + color]) {
+                    isInList[(value - 1) * 4 + color] = true;
+                    Card newCard = new Card(value, color, true);
 
-                if (cards.isEmpty()) {
-                    cards.add(newCard);
-                } else if (cards.size() == 1) {
-                    if (newCard.getValue() >= cards.getFirst().getValue()) {
+                    if (cards.isEmpty()) {
                         cards.add(newCard);
-                    } else {
-                        cards.add(0,newCard);
-                    }
-                } else for (int i = 0; i < cards.size(); i++) {
-                    if (newCard.getValue() < cards.get(i).getValue()) {
-                        cards.add(i, newCard);
-                        break;
-                    } else if (newCard.getValue() == cards.get(i).getValue()) {
-                        while (newCard.getColor() > cards.get(i).getColor() && newCard.getValue() == cards.get(i).getValue() && i < cards.size() - 1) {
-                            i++;
+                    } else if (cards.size() == 1) {
+                        if (newCard.getValue() >= cards.getFirst().getValue()) {
+                            cards.add(newCard);
+                        } else {
+                            cards.addFirst(newCard);
                         }
-                        if (i == cards.size() - 1) continue;
-                        else {
+                    } else for (int i = 0; i < cards.size(); i++) {
+                        if (newCard.getValue() < cards.get(i).getValue()) {
                             cards.add(i, newCard);
                             break;
+                        } else if (newCard.getValue() == cards.get(i).getValue()) {
+                            while (newCard.getColor() > cards.get(i).getColor() && newCard.getValue() == cards.get(i).getValue() && i < cards.size() - 1) {
+                                i++;
+                            }
+                            if (i == cards.size() - 1) continue;
+                            else {
+                                cards.add(i, newCard);
+                                break;
+                            }
                         }
-                    }
-                    if (i == cards.size() - 1) {
-                        cards.addLast(newCard);
-                        break;
+                        if (i == cards.size() - 1) {
+                            cards.add(newCard);
+                            break;
+                        }
                     }
                 }
             }
