@@ -3,7 +3,7 @@ package lab_list3;
 public class Card {
     private final int value;
     private final int color;
-    private boolean isRevealed;
+    private final boolean isRevealed;
 
     public Card(int value, int color, boolean isRevealed) {
         this.value = value;
@@ -25,7 +25,7 @@ public class Card {
     @Override
     public String toString() {
         String[] colors = {"Kier", "Karo", "Trefl", "Pik"};
-        String[] values = {null, "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Walet", "Dama", "Król"};
+        String[] values = {null, "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Walet", "Dama", "Król","14"};
         return isRevealed? values[value] + " " + colors[color]+ " " : "()";
 
     }

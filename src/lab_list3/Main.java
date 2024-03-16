@@ -1,6 +1,5 @@
 package lab_list3;
 
-import lab_list1.CardGame;
 
 import java.util.Scanner;
 
@@ -40,7 +39,7 @@ public class Main {
                     game.displayCardsByColor(scanner);
                     break;
                 case 6:
-                    game.removeDuplicateCards();
+                    game.removeUnrevealedCards();
                     break;
                 case 0:
                     System.out.println("Koniec programu.");

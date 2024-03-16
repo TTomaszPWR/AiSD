@@ -1,28 +1,72 @@
 package lab_list3;
 
-import lab_list1.Card;
-import lab_list1.FilterIterator;
 
-import java.util.ArrayList;
+
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class CardGame {
     private final OneWayLinkedListWithHead<Card> cards = new OneWayLinkedListWithHead<>();
+    private final boolean[] isInList = new boolean[52];
 
+
+
+
+   /* public void createArrayList() {
+        Random generator = new Random();
+        int value = 14, color, n=0;
+        Arrays.fill(isInList, false);
+        cards.clear();
+
+        while (value!=0)
+        {
+            value = generator.nextInt(15);
+            color = generator.nextInt(4);
+
+            if (value!=0)
+            {
+                if (value==14)
+                {
+                    cards.add(new Card(value, color, false));
+                    n++;
+                }
+                else
+                {
+                    if (!isInList[(value - 1) + 13 * color])
+                    {
+                        if (n==0)
+                        {
+                            cards.add(new Card(value, color, true));
+                        }
+                        else
+                        {
+                            cards.add(znajdzIndeks(value, color), new Card(value, color, true));
+                        }
+                        isInList[(value-1)+13*color]=true;
+                        n++;
+                    }
+                }
+            }
+        }
+
+    }*/
 
     public void createArrayList() {
         cards.clear();
-        Random generator = new Random();
+        Random random = new Random();
         System.out.println("Tworzenie Arraylist...");
         while (true) {
-            int value = generator.nextInt(15);
-            int color = generator.nextInt(4);
+            int value = random.nextInt(15);
+            int color = random.nextInt(4);
 
             if (value == 0) break;
-            else if(value==14) cards.add(new Card(generator.nextInt(13)+1,generator.nextInt(4)+1));
-            else {
-                Card newCard = new Card(value, color);
+            else if (value == 14) {
+                cards.add(new Card(value, color, false));
+            } else {
+                Card newCard = new Card(value, color, true);
 
                 if (cards.isEmpty()) {
                     cards.add(newCard);
@@ -30,7 +74,7 @@ public class CardGame {
                     if (newCard.getValue() >= cards.getFirst().getValue()) {
                         cards.add(newCard);
                     } else {
-                        cards.addFirst(newCard);
+                        cards.add(0,newCard);
                     }
                 } else for (int i = 0; i < cards.size(); i++) {
                     if (newCard.getValue() < cards.get(i).getValue()) {
@@ -52,27 +96,33 @@ public class CardGame {
                     }
                 }
             }
+
         }
-        //dodawanie asów na początku
-        for(int i=0; i<3; i++){
-            cards.addFirst(new lab_list1.Card(1,0));
-        }
-        System.out.println("Arraylist utworzona.");
     }
+
 
     public void displayAllCards() {
         if (cards.isEmpty()) {
-            System.out.println("Arraylist jest pusta.");
+            System.out.println("lista jest pusta.");
         } else {
-            System.out.println("Wszystkie karty w Arrayliście:");
-            for (lab_list1.Card card : cards) {
+            System.out.println("Wszystkie karty w liście:");
+            for (Card card : cards) {
                 System.out.println(card);
             }
         }
     }
 
     public void displayNumberOfCards() {
-        System.out.println("Liczba kart w Arrayliście: " + cards.size());
+        int cardsRevealed = 0;
+        int size = cards.size();
+        System.out.println("Liczba kart w liście: " + size);
+
+        for(Card card: cards){
+            cardsRevealed += card.isRevealed() ? 1 : 0;
+        }
+        int cardsUnrevealed = size - cardsRevealed;
+        System.out.println("Liczba odkrytych kart: " + cardsRevealed);
+        System.out.println("Liczba zakrytych kart: " + cardsUnrevealed);
     }
 
     public void displayCardsByValue(Scanner scanner) {
@@ -82,7 +132,7 @@ public class CardGame {
         if(value>=1 && value<=13) {
             boolean isSearched=false;
 
-            FilterIterator<lab_list1.Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getValue() == value);
+            FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getValue() == value);
 
             System.out.println("Karty o wartości " + value + ":");
             while (filterIterator.hasNext()) {
@@ -100,7 +150,7 @@ public class CardGame {
         if(color>=0 && color<=3) {
             boolean isSearched = false;
 
-            FilterIterator<lab_list1.Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getColor() == color);
+            FilterIterator<Card> filterIterator = new FilterIterator<>(cards.iterator(), (card) -> card.getColor() == color);
 
             System.out.println("Karty o kolorze " + color + ":");
             while (filterIterator.hasNext()) {
@@ -111,22 +161,10 @@ public class CardGame {
         }else System.out.println("Wprowadzono niepoprawną wartość. Powrócono do menu");
     }
 
-    public void removeDuplicateCards() {
-        ArrayList<lab_list1.Card> temp = new ArrayList<>();
-        boolean isDuplicate = false;
-        for (lab_list1.Card card: cards) {
-            for(Card card2: temp){
-                if(card.getValue() == card2.getValue() && card.getColor() == card2.getColor()){
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            if(!isDuplicate) temp.add(card);
-            isDuplicate = false;
-        }
-        cards.clear();
-        cards.addAll(temp);
+    public void removeUnrevealedCards() {
+        cards.removeIf(card -> !card.isRevealed());
     }
+
 }
 
 

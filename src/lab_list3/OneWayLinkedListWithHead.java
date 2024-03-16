@@ -9,13 +9,17 @@ public class OneWayLinkedListWithHead<E> extends AbstractList<E> {
         public E getValue() {
             return value;}
         public void setValue(E value) {
-            this.value = value;}
+            this.value = value;
+        }
         public Element getNext() {
-            return next;}
+            return next;
+        }
         public void setNext(Element next) {
-            this.next = next;}
+            this.next = next;
+        }
         Element(E data){
-            this.value=data;}
+            this.value=data;
+        }
     }
     Element head=null;
     public OneWayLinkedListWithHead(){}
@@ -58,9 +62,11 @@ public class OneWayLinkedListWithHead<E> extends AbstractList<E> {
             newElem.setNext(head);
             head=newElem;
         }
-        Element actElem=getElement(index-1);
-        newElem.setNext(actElem.getNext());
-        actElem.setNext(newElem);
+        else {
+            Element actElem = getElement(index - 1);
+            newElem.setNext(actElem.getNext());
+            actElem.setNext(newElem);
+        }
     }
     @Override
     public E get(int index) {
